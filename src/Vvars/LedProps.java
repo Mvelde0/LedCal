@@ -30,15 +30,15 @@ public class LedProps {
         }
     }
 
-public static initE12Array(array){
+// public static initE12Array(array){
 
-for (int i = 0; i < array.length; i++) {
-    array[i] = 
-}
+// for (int i = 0; i < array.length; i++) {
+//     array[i] = 
+// }
 
 
-    return array;
-}
+//     return array;
+// }
 
 
 
