@@ -12,9 +12,8 @@ public class Main {
         float PP3 = new LedProps().getLedCurrent();
         int PP4 = new LedProps().getLedNumbers();
 
+        LedProps.initE12Array(/Vvars.LedProps.getE12Values());
 
-
-        
         System.out.println("Enter Power Supply:");
         PP = inputPower.nextFloat();
 
