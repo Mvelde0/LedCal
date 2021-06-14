@@ -1,6 +1,8 @@
 import java.util.Scanner;
-import Vvars.*;
-import Methods.*;
+
+import methods.*;
+import vvars.*;
+import view.*;
 
 public class Main {
 
@@ -12,7 +14,8 @@ public class Main {
         float PP3 = new LedProps().getLedCurrent();
         int PP4 = new LedProps().getLedNumbers();
 
-        LedProps.initE12Array(/Vvars.LedProps.getE12Values());
+        new ViewMain().initGUI();
+        // LedProps.initE12Array(/Vvars.LedProps.getE12Values());
 
         System.out.println("Enter Power Supply:");
         PP = inputPower.nextFloat();
@@ -38,9 +41,9 @@ public class Main {
         LedProps.setLedNumbers(PP4);
         System.out.println("LED Number set to: " + PP4);
 
-        LedProps.confirmCheck();
+        Methods.confirmCheck();
         Methods.calculate(0);
-        System.out.println("Resistor MAIN NOW: " + Math.round(Vvars.LedProps.getResistor()));
+        System.out.println("Resistor MAIN NOW: " + Math.round(vvars.LedProps.getResistor()));
     }
 
 }

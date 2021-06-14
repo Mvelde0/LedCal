@@ -1,4 +1,4 @@
-package Vvars;
+package vvars;
 
 import java.sql.Array;
 
@@ -15,29 +15,14 @@ public class LedProps {
     // Function Properties
     private static int FormulaType;
 
-    public static void confirmCheck() {
-        if (getPowerSupply() < 3 || getPowerSupply() > 24) {
-            System.err.println("Power Supply must be within 3 and 24");
-        }
-        if (getLedPowerDrop() < 1.6 || getLedPowerDrop() > 4) {
-            System.err.println("LED Power Drop must be within 1.6 and 4");
-        }
-        if (getLedCurrent() < 2 || getLedCurrent() > 70) {
-            System.err.println("LED current must be within 2 and 70");
-        }
-        if (getLedNumbers() < 1 || getLedNumbers() > 99) {
-            System.err.println("Number of LEDS must be within 1 and 99");
-        }
-    }
+    // public static Array initE12Array(array){
 
-public static Array initE12Array(array){
-
-for (int i = 0; i < array.length; i++) {
-    array[i] =  i + 10*(1+(i/12.));
-System.out.println(i);
-}
-    return array;
-}
+    // for (int i = 0; i < array.length; i++) {
+    // array[i] = i + 10*(1+(i/12.));
+    // System.out.println(i);
+    // }
+    // return array;
+    // }
 
     // Getters
 
