@@ -10,8 +10,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ViewMain {
+public class ViewMain implements ActionListener {
 
     // Defining Frames & Panels
     JFrame mFrame = new JFrame();
@@ -51,10 +53,13 @@ public class ViewMain {
     // Defining Images
     ImageIcon image = new ImageIcon("logo.png");
 
+    // Defining Actions
+
     // Frame Setup
     public void initGUI() {
 
         // Main Panel
+
         mainPanel.setLayout(new GridLayout(4, 2));
         mainPanel.add(parameterMainPanel);
         mainPanel.add(calculateMainPanel);
@@ -93,6 +98,15 @@ public class ViewMain {
 
         calculateButtonPanel.setLayout(new GridLayout(1, 1));
         calculateButtonPanel.add(buttonCalcButton);
+        buttonCalcButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("BUTTON TEST");
+            }
+
+        });
 
         // Result Panel
         resultMainPanel.setLayout(new GridLayout(1, 2));
@@ -116,5 +130,7 @@ public class ViewMain {
         mFrame.setResizable(false);
         mFrame.add(mainPanel);
         mFrame.setVisible(true);
+
     }
+
 }

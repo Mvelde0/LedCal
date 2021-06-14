@@ -13,6 +13,7 @@ public class Methods {
 
     private int LForm = vvars.LedProps.getFormulaType();
 
+
     // Checks if the properties are within the allowed values
     public static void confirmCheck() {
         if (LedProps.getPowerSupply() < 3 || LedProps.getPowerSupply() > 24) {
@@ -50,5 +51,6 @@ public class Methods {
         System.out.println("Resistor is: " + Math.round(R));
 
     }
+
 
 }
