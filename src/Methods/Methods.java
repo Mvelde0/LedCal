@@ -5,15 +5,6 @@ import vvars.LedProps;
 
 public class Methods {
 
-    private static float R = vvars.LedProps.getResistor();
-    private static float P = vvars.LedProps.getPowerSupply();
-    private static float V = vvars.LedProps.getLedPowerDrop();
-    private static float mA = vvars.LedProps.getLedCurrent();
-    private static float N = vvars.LedProps.getLedNumbers();
-
-    private int LForm = vvars.LedProps.getFormulaType();
-
-
     // Checks if the properties are within the allowed values
     public static void confirmCheck() {
         if (LedProps.getPowerSupply() < 3 || LedProps.getPowerSupply() > 24) {
@@ -32,25 +23,59 @@ public class Methods {
 
     public static void calculate(int FormulaType) {
 
-        float RSet;
+        double R = LedProps.getResistor();
+        double P = LedProps.getPowerSupply();
+        double V = LedProps.getLedPowerDrop();
+        double mA = LedProps.getLedCurrent();
+        int N = LedProps.getLedNumbers();
+
         System.out.println("\n CALCULATING PARAMATERS:" + "\n PowerSupply: " + P + "\n Power Drop: " + V
                 + "\n LED Current: " + mA + "\n LED Numbers: " + N);
 
-        if (FormulaType == 0) {
-            System.out.println("Series Formula selected");
-            RSet = ((P - (V * N)) / (mA / 1000));
-            vvars.LedProps.setResistor(RSet);
-
-        } else if (FormulaType == 1) {
-            System.out.println("Parallel Formula selected");
-            RSet = ((P - V) / (mA * N / 1000));
-            vvars.LedProps.setResistor(RSet);
-        } else {
-            System.err.println("No LED Series selected");
+        switch (FormulaType) {
+            case 1:
+                System.out.println("Series Formula selected");
+                LedProps.setResistor((P - (V * N)) / (mA / 1000));
+                break;
+            case 2:
+                System.out.println("Parallel Formula selected");
+                LedProps.setResistor((P - V) / (mA * N / 1000));
+                break;
+            default:
+                System.err.println("No LED Series selected");
+                break;
         }
-        System.out.println("Resistor is: " + Math.round(R));
+
+        // switch (FormulaType) {
+        // case 1:
+        // System.out.println("Series Formula selected");
+        // LedProps.setResistor((LedProps.getPowerSupply() + LedProps.getLedPowerDrop()
+        // + LedProps.getLedCurrent() + LedProps.getLedNumbers()));
+        // break;
+        // case 2:
+        // System.out.println("Parallel Formula selected");
+        // LedProps.setResistor((LedProps.getPowerSupply() * LedProps.getLedPowerDrop()
+        // * LedProps.getLedCurrent() * LedProps.getLedNumbers()));
+        // break;
+        // default:
+        // System.err.println("No LED Series selected");
+        // break;
+        // }
+
+        // if (FormulaType == 0) {
+        // System.out.println("Series Formula selected");
+        // RSet = ((P - (V * N)) / (mA / 1000));
+        // vvars.LedProps.setResistor(RSet);
+
+        // } else if (FormulaType == 1) {
+        // System.out.println("Parallel Formula selected");
+        // RSet = ((P - V) / (mA * N / 1000));
+        // vvars.LedProps.setResistor(RSet);
+        // } else {
+        // System.err.println("No LED Series selected");
+        // }
+        // System.out.println("Resistor is: " + Math.round(R));
 
     }
-
 
 }

@@ -1,6 +1,10 @@
 package view;
 
-import javax.swing.Action;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,11 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ViewMain implements ActionListener {
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
+import methods.Methods;
+import vvars.LedProps;
+
+public class ViewMain {
+
+    // References
 
     // Defining Frames & Panels
     JFrame mFrame = new JFrame();
@@ -36,24 +44,49 @@ public class ViewMain implements ActionListener {
     JLabel labelLedNumber = new JLabel("Number of LEDs");
     JLabel labelTextCalculated = new JLabel("Calculated Value");
     JLabel labelTextCalculatedResistor = new JLabel("Resistor");
-    JLabel labelResultCalculated = new JLabel("Ω" + ""); // Calculated results will be here
-    JLabel labelResultResistor = new JLabel("Ω" + ""); // Chosen Resistor will be here
+    JLabel labelResultCalculated = new JLabel("Ω"); // Calculated results will be here
+    JLabel labelResultResistor = new JLabel("Ω"); // Chosen Resistor will be here
 
     // Defining Textfields
-    JTextField textPSupply = new JTextField();
-    JTextField textPowerDrop = new JTextField();
-    JTextField textLedCurrent = new JTextField();
-    JTextField textLedNumber = new JTextField();
+    JTextField textPSupply = new JTextField("3");
+    JTextField textPowerDrop = new JTextField("3");
+    JTextField textLedCurrent = new JTextField("3");
+    JTextField textLedNumber = new JTextField("3");
 
     // Defining Buttons
     JButton buttonCalcButton = new JButton("Calculate");
+
+    ButtonGroup rbGroup = new ButtonGroup();
     JRadioButton radioSeriesButton = new JRadioButton("Series");
     JRadioButton radioParallelButton = new JRadioButton("Parallel");
 
+    // Defining Actions
+    ActionListener radioButtonListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == radioSeriesButton) {
+                System.out.println("Selected Series");
+                LedProps.setFormulaType(1);
+                System.out.println("Formula Type = " + LedProps.getFormulaType());
+            } else if (e.getSource() == radioParallelButton) {
+                System.out.println("Selected Parallel");
+                LedProps.setFormulaType(2);
+                System.out.println("Formula Type = " + LedProps.getFormulaType());
+            }
+        }
+    };
+
+    ActionListener calculateButtonListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            collectInput();
+
+            Methods.calculate(LedProps.getFormulaType());
+            System.out.println("Resistor is: " + LedProps.getResistor());
+            labelResultCalculated.setText("Ω " + Double.toString(LedProps.getResistor()));
+        }
+    };
+
     // Defining Images
     ImageIcon image = new ImageIcon("logo.png");
-
-    // Defining Actions
 
     // Frame Setup
     public void initGUI() {
@@ -90,23 +123,26 @@ public class ViewMain implements ActionListener {
         calculateMainPanel.add(calculateRadioPanel);
         calculateMainPanel.add(calculateButtonPanel);
 
+        // Radio Button
         calculateRadioPanel.setLayout(new GridLayout(1, 2));
         calculateRadioPanel.add(radioSeriesButton);
         calculateRadioPanel.add(radioParallelButton);
-        radioSeriesButton.setEnabled(true);
-        radioParallelButton.setEnabled(false);
+        // radioSeriesButton.setSelected(true);
+
+        rbGroup.add(radioSeriesButton);
+        rbGroup.add(radioParallelButton);
+
+        radioParallelButton.addActionListener(radioButtonListener);
+        radioSeriesButton.addActionListener(radioButtonListener);
+        rbGroup.add(radioSeriesButton);
+        rbGroup.add(radioParallelButton);
+
+        // Calculate Button
 
         calculateButtonPanel.setLayout(new GridLayout(1, 1));
         calculateButtonPanel.add(buttonCalcButton);
-        buttonCalcButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                System.out.println("BUTTON TEST");
-            }
-
-        });
+        buttonCalcButton.addActionListener(calculateButtonListener);
 
         // Result Panel
         resultMainPanel.setLayout(new GridLayout(1, 2));
@@ -125,12 +161,29 @@ public class ViewMain implements ActionListener {
 
         // Frame
         mFrame.setTitle("LED Resistance Calculator");
-        mFrame.setDefaultCloseOperation(mFrame.EXIT_ON_CLOSE);
+        mFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mFrame.setSize(400, 500);
         mFrame.setResizable(false);
         mFrame.add(mainPanel);
         mFrame.setVisible(true);
 
+    }
+
+    public void collectInput() {
+        System.out.println("Collecting Input");
+        String resP = textPSupply.getText();
+        String resV = textPowerDrop.getText();
+        String resMA = textLedCurrent.getText();
+        String resN = textLedNumber.getText();
+
+        LedProps.setPowerSupply(Double.parseDouble(resP));
+        LedProps.setLedPowerDrop(Double.parseDouble(resV));
+        LedProps.setLedCurrent(Double.parseDouble(resMA));
+        LedProps.setLedNumbers(Integer.parseInt(resN));
+
+        System.out.println("\n Power Supply: " + LedProps.getPowerSupply() + "\n Power Drop: "
+                + LedProps.getLedPowerDrop() + "\n LED Current: " + LedProps.getLedCurrent() + "\n LED Numbers: "
+                + LedProps.getLedNumbers() + "\n Formula Type: " + LedProps.getFormulaType());
     }
 
 }

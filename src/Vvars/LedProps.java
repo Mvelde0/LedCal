@@ -5,10 +5,10 @@ import java.sql.Array;
 public class LedProps {
 
     // LED Properties
-    private static float P_PowerSupply;
-    private static float R_Resistor;
-    private static float V_LedPowerDrop;
-    private static float mA_LedCurrent;
+    private static double P_PowerSupply;
+    private static double R_Resistor;
+    private static double V_LedPowerDrop;
+    private static double mA_LedCurrent;
     private static int N_LedNumbers;
     private static Array E12Values;
 
@@ -26,19 +26,19 @@ public class LedProps {
 
     // Getters
 
-    public static float getPowerSupply() {
+    public static double getPowerSupply() {
         return P_PowerSupply;
     }
 
-    public static float getResistor() {
+    public static double getResistor() {
         return R_Resistor;
     }
 
-    public static float getLedPowerDrop() {
+    public static double getLedPowerDrop() {
         return V_LedPowerDrop;
     }
 
-    public static float getLedCurrent() {
+    public static double getLedCurrent() {
         return mA_LedCurrent;
     }
 
@@ -55,19 +55,19 @@ public class LedProps {
     }
 
     // Setters
-    public static void setPowerSupply(float newPowerSupply) {
+    public static void setPowerSupply(double newPowerSupply) {
         P_PowerSupply = newPowerSupply;
     }
 
-    public static void setResistor(float newResistor) {
+    public static void setResistor(double newResistor) {
         R_Resistor = newResistor;
     }
 
-    public static void setLedPowerDrop(float newLedPowerDrop) {
+    public static void setLedPowerDrop(double newLedPowerDrop) {
         V_LedPowerDrop = newLedPowerDrop;
     }
 
-    public static void setLedCurrent(float newLedCurrent) {
+    public static void setLedCurrent(double newLedCurrent) {
         mA_LedCurrent = newLedCurrent;
     }
 

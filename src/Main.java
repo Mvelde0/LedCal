@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 import methods.*;
-import vvars.*;
+import vvars.LedProps;
 import view.*;
 
 public class Main {
@@ -9,41 +9,42 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner inputPower = new Scanner(System.in);
-        float PP = new LedProps().getPowerSupply();
-        float PP2 = new LedProps().getLedPowerDrop();
-        float PP3 = new LedProps().getLedCurrent();
+        double PP = new LedProps().getPowerSupply();
+        double PP2 = new LedProps().getLedPowerDrop();
+        double PP3 = new LedProps().getLedCurrent();
         int PP4 = new LedProps().getLedNumbers();
 
         new ViewMain().initGUI();
-        // LedProps.initE12Array(/Vvars.LedProps.getE12Values());
+        // // LedProps.initE12Array(/Vvars.LedProps.getE12Values());
 
-        System.out.println("Enter Power Supply:");
-        PP = inputPower.nextFloat();
+        // System.out.println("Enter Power Supply:");
+        // PP = inputPower.nextdouble();
 
-        LedProps.setPowerSupply(PP);
-        System.out.println("Power Supply set to: " + PP);
+        // LedProps.setPowerSupply(PP);
+        // System.out.println("Power Supply set to: " + PP);
 
-        System.out.println("Enter LED Power Drop:");
-        PP2 = inputPower.nextFloat();
+        // System.out.println("Enter LED Power Drop:");
+        // PP2 = inputPower.nextdouble();
 
-        LedProps.setLedPowerDrop(PP2);
-        System.out.println("LED Power Drop set to: " + PP2);
+        // LedProps.setLedPowerDrop(PP2);
+        // System.out.println("LED Power Drop set to: " + PP2);
 
-        System.out.println("Enter LED Current");
-        PP3 = inputPower.nextFloat();
+        // System.out.println("Enter LED Current");
+        // PP3 = inputPower.nextdouble();
 
-        LedProps.setLedCurrent(PP3);
-        System.out.println("LED Current set to: " + PP3);
+        // LedProps.setLedCurrent(PP3);
+        // System.out.println("LED Current set to: " + PP3);
 
-        System.out.println("Enter Numbers of LEDs");
-        PP4 = inputPower.nextInt();
+        // System.out.println("Enter Numbers of LEDs");
+        // PP4 = inputPower.nextInt();
 
-        LedProps.setLedNumbers(PP4);
-        System.out.println("LED Number set to: " + PP4);
+        // LedProps.setLedNumbers(PP4);
+        // System.out.println("LED Number set to: " + PP4);
 
-        Methods.confirmCheck();
-        Methods.calculate(0);
-        System.out.println("Resistor MAIN NOW: " + Math.round(vvars.LedProps.getResistor()));
+        // Methods.confirmCheck();
+        // Methods.calculate(0);
+        // System.out.println("Resistor MAIN NOW: " +
+        // Math.round(vvars.LedProps.getResistor()));
     }
 
 }
