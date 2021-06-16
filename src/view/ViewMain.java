@@ -81,7 +81,7 @@ public class ViewMain {
 
             Methods.calculate(LedProps.getFormulaType());
             System.out.println("Resistor is: " + LedProps.getResistor());
-            labelResultCalculated.setText("Ω " + Double.toString(LedProps.getResistor()));
+            labelResultCalculated.setText("Ω " + Double.toString(Math.round(LedProps.getResistor())));
         }
     };
 

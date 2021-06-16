@@ -45,37 +45,40 @@ public class Methods {
                 System.err.println("No LED Series selected");
                 break;
         }
-
-        // switch (FormulaType) {
-        // case 1:
-        // System.out.println("Series Formula selected");
-        // LedProps.setResistor((LedProps.getPowerSupply() + LedProps.getLedPowerDrop()
-        // + LedProps.getLedCurrent() + LedProps.getLedNumbers()));
-        // break;
-        // case 2:
-        // System.out.println("Parallel Formula selected");
-        // LedProps.setResistor((LedProps.getPowerSupply() * LedProps.getLedPowerDrop()
-        // * LedProps.getLedCurrent() * LedProps.getLedNumbers()));
-        // break;
-        // default:
-        // System.err.println("No LED Series selected");
-        // break;
-        // }
-
-        // if (FormulaType == 0) {
-        // System.out.println("Series Formula selected");
-        // RSet = ((P - (V * N)) / (mA / 1000));
-        // vvars.LedProps.setResistor(RSet);
-
-        // } else if (FormulaType == 1) {
-        // System.out.println("Parallel Formula selected");
-        // RSet = ((P - V) / (mA * N / 1000));
-        // vvars.LedProps.setResistor(RSet);
-        // } else {
-        // System.err.println("No LED Series selected");
-        // }
-        // System.out.println("Resistor is: " + Math.round(R));
-
     }
 
+    public static double comparefromE12Array(double arr[], double doubleResult) {
+        double n = arr.length;
+
+        // Corner cases
+        if (doubleResult <= arr[0])
+            return arr[0];
+        if (doubleResult >= arr[(int) n - 1])
+            return arr[(int) n - 1];
+
+        int i = 0, j = (int) n, mid = 0;
+
+        while (i < j) {
+            mid = (i + j) / 2;
+
+            if (arr[mid] == doubleResult)
+                return arr[mid];
+
+            // /*
+            //  * If target is less than array element, then search in left
+            //  */
+            // if (doubleResult < arr[mid]) {
+
+            //     // If target is greater than previous
+            //     // to mid, return closest of two
+            //     if (mid > 0 && doubleResult > arr[mid - 1])
+            //         return getClosest(arr[mid - 1], arr[mid], doubleResult);
+
+            //     /* Repeat for left half */
+            //     j = mid;
+            }
+
+        }
+
+    }
 }
