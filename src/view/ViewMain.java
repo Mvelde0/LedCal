@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import java.text.DecimalFormat;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -21,7 +22,8 @@ import vvars.LedProps;
 
 public class ViewMain {
 
-    // References
+    // Datatypes
+    DecimalFormat decF = new DecimalFormat("#0.00");
 
     // Defining Frames & Panels
     JFrame mFrame = new JFrame();
@@ -43,15 +45,15 @@ public class ViewMain {
     JLabel labelLedCurrent = new JLabel("LED Current (mA)");
     JLabel labelLedNumber = new JLabel("Number of LEDs");
     JLabel labelTextCalculated = new JLabel("Calculated Value");
-    JLabel labelTextCalculatedResistor = new JLabel("Resistor");
+    JLabel labelTextCalculatedResistor = new JLabel("Resistor Needed");
     JLabel labelResultCalculated = new JLabel("Ω"); // Calculated results will be here
     JLabel labelResultResistor = new JLabel("Ω"); // Chosen Resistor will be here
 
     // Defining Textfields
-    JTextField textPSupply = new JTextField("3");
+    JTextField textPSupply = new JTextField("15");
     JTextField textPowerDrop = new JTextField("3");
     JTextField textLedCurrent = new JTextField("3");
-    JTextField textLedNumber = new JTextField("3");
+    JTextField textLedNumber = new JTextField("5");
 
     // Defining Buttons
     JButton buttonCalcButton = new JButton("Calculate");
@@ -77,11 +79,18 @@ public class ViewMain {
 
     ActionListener calculateButtonListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            collectInput();
 
+            collectInput();
             Methods.calculate(LedProps.getFormulaType());
+
+            Methods.confirmCheck();
+
             System.out.println("Resistor is: " + LedProps.getResistor());
-            labelResultCalculated.setText("Ω " + Double.toString(Math.round(LedProps.getResistor())));
+            labelResultCalculated.setText("Ω " + decF.format(LedProps.getResistor()));
+
+            Methods.findClosest(LedProps.getE12val(), LedProps.getResistor());
+            System.out.println("Chosen Resistor: " + LedProps.getChosenResistor());
+            labelResultResistor.setText("Ω " + Double.toString(LedProps.getChosenResistor()));
         }
     };
 
@@ -169,6 +178,9 @@ public class ViewMain {
 
     }
 
+    /*
+     * Collects the given input from the textfields
+     */
     public void collectInput() {
         System.out.println("Collecting Input");
         String resP = textPSupply.getText();
