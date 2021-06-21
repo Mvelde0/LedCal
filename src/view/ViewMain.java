@@ -17,7 +17,8 @@ import java.text.DecimalFormat;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-import methods.Methods;
+import methods.ResistorCalculation;
+import methods.ResistorColorCode;
 import vvars.LedProps;
 
 public class ViewMain {
@@ -81,16 +82,17 @@ public class ViewMain {
         public void actionPerformed(ActionEvent e) {
 
             collectInput();
-            Methods.calculate(LedProps.getFormulaType());
+            ResistorCalculation.calculate(LedProps.getFormulaType());
 
-            Methods.confirmCheck();
+            ResistorCalculation.confirmCheck();
 
             System.out.println("Resistor is: " + LedProps.getResistor());
             labelResultCalculated.setText("Ω " + decF.format(LedProps.getResistor()));
 
-            Methods.findClosest(LedProps.getE12val(), LedProps.getResistor());
+            ResistorCalculation.findClosest(LedProps.getE12val(), LedProps.getResistor());
             System.out.println("Chosen Resistor: " + LedProps.getChosenResistor());
             labelResultResistor.setText("Ω " + Double.toString(LedProps.getChosenResistor()));
+            ResistorColorCode.convertDoubleValues(LedProps.getChosenResistor());
         }
     };
 

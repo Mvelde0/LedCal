@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 
 import vvars.LedProps;
 
-public class Methods {
+public class ResistorCalculation {
 
     // Checks if the properties are within the allowed values
     public static void confirmCheck() {
