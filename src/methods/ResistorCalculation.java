@@ -67,15 +67,15 @@ public class ResistorCalculation {
         double result = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            System.out.println(i + " : " + arr[i]);
+            // System.out.println(i + " : " + arr[i]);
 
             if (target <= arr[i]) {
                 result = arr[i];
-                System.out.println("Chosen Result NOW: " + result);
+                // System.out.println("Chosen Result NOW: " + result);
                 break;
             } else if (arr[i] <= target) {
                 result = arr[i + 1];
-                System.out.println("Chosen Result NOW: " + result);
+                // System.out.println("Chosen Result NOW: " + result);
             } else {
             }
 
