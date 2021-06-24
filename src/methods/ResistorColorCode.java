@@ -30,10 +30,8 @@ public class ResistorColorCode {
             } else {
                 newString = doubleToString.replaceAll("\\.0", "");
                 stringToColor(newString);
-
             }
         }
-
     }
 
     /*
@@ -87,7 +85,6 @@ public class ResistorColorCode {
             String value = bcc.get(key);
 
             if (compareList.size() > 2) {
-
                 if (compareList.get(0) == 0 && count == 0) {
                     System.out.println("First character is a 0");
                     resultColorList.add(bcc.get(0));
@@ -98,22 +95,18 @@ public class ResistorColorCode {
                     resultColorList.add(bcc.get(0));
                     secondNr++;
                 }
-
                 if (compareList.get(2) != 0 && count >= 2) {
 
                 } else if (value == "BLACK" && count >= 2) {
                     System.out.println("FOUND 0");
                     zeros++;
                     System.out.println("Zeroes: " + zeros);
-
                 } else if (value != "BLACK") {
                     System.out.println("deci = " + deci + " - " + key);
                     resultColorList.add(value);
-
                 }
                 count++;
             } else if (compareList.size() <= 2) {
-
                 System.out.println("I'M SMOL");
                 if (compareList.get(0) == 0 && value == "BLACK" && count == 0) {
                     System.out.println("Number is smaller then 1");
@@ -124,7 +117,6 @@ public class ResistorColorCode {
                 count++;
             }
             System.out.println(count + " : " + key + " = " + value);
-
         }
 
         System.out.println("Counted " + deci + " decimals");
@@ -139,8 +131,22 @@ public class ResistorColorCode {
             resultColorList.add(bcc.get(0));
         } else if (zeroCount == 0 && compareList.size() <= 2) {
             resultColorList.add(bcc.get(11));
+        } else if (zeroCount == 0 && compareList.size() <= 0) {
+            System.out.println("Result is 0 or smaller");
         }
         System.out.println("Color Band Code is:" + resultColorList);
-    }
 
+        try {
+            if (compareList.size() >= 1) {
+                LedProps.setFirstColorLabel(resultColorList.get(0));
+                LedProps.setSecondColorLabel(resultColorList.get(1));
+                LedProps.setThirdColorLabel(resultColorList.get(2));
+            }
+        } catch (
+
+        Exception e) {
+            System.out.println("CAN'T ASSIGN COLORS BECAUSE THE RESULT IS 0 OR SMALLER");
+        }
+
+    }
 }

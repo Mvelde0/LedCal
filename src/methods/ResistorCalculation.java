@@ -1,25 +1,18 @@
-
 package methods;
-
-import java.lang.reflect.Array;
 
 import vvars.LedProps;
 
 public class ResistorCalculation {
 
-    // Checks if the properties are within the allowed values
-    public static void confirmCheck() {
-        if (LedProps.getPowerSupply() < 3 || LedProps.getPowerSupply() > 24) {
-            System.err.println("Power Supply must be within 3 and 24");
-        } else if (LedProps.getLedPowerDrop() < 1.6 || LedProps.getLedPowerDrop() > 4) {
-            System.err.println("LED Power Drop must be within 1.6 and 4");
-        } else if (LedProps.getLedCurrent() < 2 || LedProps.getLedCurrent() > 70) {
-            System.err.println("LED current must be within 2 and 70");
-        } else if (LedProps.getLedNumbers() < 1 || LedProps.getLedNumbers() > 99) {
-            System.err.println("Number of LEDS must be within 1 and 99");
-        } else if (LedProps.getFormulaType() > 1) {
-            System.err.println("No LED Series selected");
-
+    /*
+     * Checks if the input value is within the min and max values.
+     */
+    public static boolean confirmCheckRange(Double input, double min, double max) {
+        if (input < min || input > max) {
+            System.err.println("Value is not within range of " + min + " and " + max);
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -42,7 +35,7 @@ public class ResistorCalculation {
         switch (FormulaType) {
             case 1:
                 System.out.println("Series Formula selected");
-                LedProps.setResistor((P - (V * N)) / (mA / 1000));
+                LedProps.setResistor((P - (V * N)) / (mA / 1000) + Math.abs(-5));
                 break;
             case 2:
                 System.out.println("Parallel Formula selected");

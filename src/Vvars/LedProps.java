@@ -1,6 +1,8 @@
 package vvars;
 
-import java.sql.Array;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 public class LedProps {
 
@@ -14,9 +16,15 @@ public class LedProps {
     // Function Properties
     private static int FormulaType;
     private static double ChosenResistor;
+    private static String labelTip;
+    private static boolean valuesValidated;
+    private static boolean formulaValidated;
 
     // Result Properties
-    private static String[] colorCodes;
+
+    private static String firstColorLabel;
+    private static String secondColorLabel;
+    private static String thirdColorLabel;
 
     // E12 Resistance values
 
@@ -33,12 +41,24 @@ public class LedProps {
 
     // Getters
 
-    public static double[] getE12val() {
-        return e12val;
+    public static String getFirstColorLabel() {
+        return firstColorLabel;
     }
 
-    public static String[] getColorCodes() {
-        return colorCodes;
+    public static String getLabelTip() {
+        return labelTip;
+    }
+
+    public static String getSecondColorLabel() {
+        return secondColorLabel;
+    }
+
+    public static String getThirdColorLabel() {
+        return thirdColorLabel;
+    }
+
+    public static double[] getE12val() {
+        return e12val;
     }
 
     public static double getChosenResistor() {
@@ -71,8 +91,20 @@ public class LedProps {
 
     // Setters
 
-    public static void setColorCodes(String[] colorCodes) {
-        colorCodes = colorCodes;
+    public static void setLabelTip(String labelTip) {
+        LedProps.labelTip = labelTip;
+    }
+
+    public static void setFirstColorLabel(String firstColorLabel) {
+        LedProps.firstColorLabel = firstColorLabel;
+    }
+
+    public static void setSecondColorLabel(String secondColorLabel) {
+        LedProps.secondColorLabel = secondColorLabel;
+    }
+
+    public static void setThirdColorLabel(String thirdColorLabel) {
+        LedProps.thirdColorLabel = thirdColorLabel;
     }
 
     public static void setE12val(double[] e12val) {
