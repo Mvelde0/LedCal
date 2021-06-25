@@ -9,6 +9,11 @@ import vvars.LedProps;
 
 public class ResistorColorCode {
 
+    /*
+     * Will run through the textfields for rangeChecks before continuing to pass the
+     * textfield input to the Setters
+     */
+
     public static void convertDoubleValues(Double codeColor) {
 
         System.out.println("Converter GOT: " + codeColor);
@@ -46,8 +51,6 @@ public class ResistorColorCode {
 
         System.out.println("Converting: " + stringColor);
 
-        String removedDecimal;
-
         ArrayList<Integer> compareList = new ArrayList<>();
         ArrayList<String> resultColorList = new ArrayList<>();
 
@@ -65,6 +68,11 @@ public class ResistorColorCode {
         bcc.put(10, "SILVER");
         bcc.put(11, "GOLD");
 
+        /*
+         * Splits and converts the provided String into an Integer and adds them to the
+         * compareList.
+         */
+
         for (String retV : stringColor.split("")) {
             int num = Integer.parseInt(retV);
             compareList.add(num);
@@ -78,6 +86,12 @@ public class ResistorColorCode {
         int secondNr = 0;
         int zeros = 0;
         int count = 0;
+
+        /*
+         * Iterates through the compareList, taking note of which element is on which
+         * indeces. (ex. 0's on the first index will tell the function it is a decimal
+         * etc.)
+         */
 
         while (itrCompList.hasNext()) {
 
@@ -106,8 +120,8 @@ public class ResistorColorCode {
                     resultColorList.add(value);
                 }
                 count++;
+
             } else if (compareList.size() <= 2) {
-                System.out.println("I'M SMOL");
                 if (compareList.get(0) == 0 && value == "BLACK" && count == 0) {
                     System.out.println("Number is smaller then 1");
                     resultColorList.add(value);
@@ -123,6 +137,12 @@ public class ResistorColorCode {
         System.out.println("Counted " + zeros + " zeroes");
 
         int zeroCount = zeros - (deci + secondNr);
+
+        /*
+         * Adds the Third band color based on the size of the arraylist and elements
+         * from the iterator. (Ex. adds GOLD as a multiplier if it contains a decimal
+         * number and a whole number.)
+         */
 
         if (zeroCount > 0 && compareList.size() > 2) {
             System.out.println("Adding " + zeroCount + " : " + (bcc.get(zeroCount)));
@@ -142,10 +162,8 @@ public class ResistorColorCode {
                 LedProps.setSecondColorLabel(resultColorList.get(1));
                 LedProps.setThirdColorLabel(resultColorList.get(2));
             }
-        } catch (
-
-        Exception e) {
-            System.out.println("CAN'T ASSIGN COLORS BECAUSE THE RESULT IS 0 OR SMALLER");
+        } catch (Exception e) {
+            System.out.println("Can't assign colors because the resutlt is 0 or smaller");
         }
 
     }

@@ -1,9 +1,5 @@
 package vvars;
 
-import java.util.ArrayList;
-
-import javax.swing.JLabel;
-
 public class LedProps {
 
     // LED Properties
@@ -19,6 +15,8 @@ public class LedProps {
     private static String labelTip;
     private static boolean valuesValidated;
     private static boolean formulaValidated;
+    private static boolean validInput;
+    private static boolean validResult;
 
     // Result Properties
 
@@ -43,6 +41,22 @@ public class LedProps {
 
     public static String getFirstColorLabel() {
         return firstColorLabel;
+    }
+
+    public static boolean isValidResult() {
+        return validResult;
+    }
+
+    public static boolean isValidInput() {
+        return validInput;
+    }
+
+    public static boolean isValuesValidated() {
+        return valuesValidated;
+    }
+
+    public static boolean isFormulaValidated() {
+        return formulaValidated;
     }
 
     public static String getLabelTip() {
@@ -90,6 +104,22 @@ public class LedProps {
     }
 
     // Setters
+
+    public static void setValidResult(boolean validResult) {
+        LedProps.validResult = validResult;
+    }
+
+    public static void setValidInput(boolean validInput) {
+        LedProps.validInput = validInput;
+    }
+
+    public static void setValuesValidated(boolean valuesValidated) {
+        LedProps.valuesValidated = valuesValidated;
+    }
+
+    public static void setFormulaValidated(boolean formulaValidated) {
+        LedProps.formulaValidated = formulaValidated;
+    }
 
     public static void setLabelTip(String labelTip) {
         LedProps.labelTip = labelTip;

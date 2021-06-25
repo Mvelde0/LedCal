@@ -1,17 +1,47 @@
 package methods;
 
+import java.awt.Color;
+import java.util.regex.Pattern;
+
+import javax.swing.BorderFactory;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
 import vvars.LedProps;
 
 public class ResistorCalculation {
 
     /*
+     * Validates if the input is an integer/double.
+     */
+
+    public static boolean validateInput(String name, JTextField textField, JTextArea textArea) {
+
+        String tf = textField.getText();
+        Pattern VALID_WORD = Pattern.compile("^[A-Za-z]*$");
+
+        if (!VALID_WORD.matcher(tf).matches()) {
+            textField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            return true;
+        } else {
+            textArea.setText("");
+            System.err.println("Invalid Input for " + name);
+            textField.setBorder(new LineBorder(Color.RED, 2));
+            return false;
+        }
+    }
+
+    /*
      * Checks if the input value is within the min and max values.
      */
-    public static boolean confirmCheckRange(Double input, double min, double max) {
+    public static boolean confirmCheckRange(String name, JTextField textfield, Double input, double min, double max) {
         if (input < min || input > max) {
-            System.err.println("Value is not within range of " + min + " and " + max);
+            System.err.println(name + " is not within range of " + min + " and " + max);
+            textfield.setBorder(new LineBorder(Color.RED, 2));
             return false;
         } else {
+            textfield.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             return true;
         }
     }
@@ -23,11 +53,12 @@ public class ResistorCalculation {
      */
     public static void calculate(int FormulaType) {
 
-        double R = LedProps.getResistor();
         double P = LedProps.getPowerSupply();
         double V = LedProps.getLedPowerDrop();
         double mA = LedProps.getLedCurrent();
         int N = LedProps.getLedNumbers();
+
+        LedProps.setValidResult(false);
 
         System.out.println("\n CALCULATING PARAMATERS:" + "\n PowerSupply: " + P + "\n Power Drop: " + V
                 + "\n LED Current: " + mA + "\n LED Numbers: " + N);
@@ -35,12 +66,25 @@ public class ResistorCalculation {
         switch (FormulaType) {
             case 1:
                 System.out.println("Series Formula selected");
-                LedProps.setResistor((P - (V * N)) / (mA / 1000) + Math.abs(-5));
-                break;
+                LedProps.setResistor((P - (V * N)) / (mA / 1000));
+
+                if (LedProps.getResistor() <= 0) {
+                    System.err.print("Result is not a positive number. Cannot assign colors");
+                    break;
+                } else {
+                    LedProps.setValidResult(true);
+                    break;
+                }
             case 2:
                 System.out.println("Parallel Formula selected");
                 LedProps.setResistor((P - V) / (mA * N / 1000));
-                break;
+                if (LedProps.getResistor() <= 0) {
+                    System.err.print("Result is not a positive number. Cannot assign colors");
+                    break;
+                } else {
+                    LedProps.setValidResult(true);
+                    break;
+                }
             default:
                 System.err.println("No LED Series selected");
                 break;

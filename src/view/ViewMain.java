@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -23,9 +21,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
 import java.text.DecimalFormat;
@@ -35,7 +33,6 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import methods.*;
 import vvars.*;
 import components.TextPrompt;
-import handlers.MessageHandler;
 
 public class ViewMain {
 
@@ -52,6 +49,7 @@ public class ViewMain {
 
     // Text Areas
     JTextArea textArHelp = new JTextArea("Enter your values, select the desired formula and press Calculate");
+    JScrollPane scrollPane = new JScrollPane(textArHelp);
 
     // Defining Frames & Panels
     JFrame mFrame = new JFrame();
@@ -86,10 +84,10 @@ public class ViewMain {
     JLabel labelBandThirdColor = new JLabel("");
 
     // Defining Textfields
-    JTextField textPSupply = new JTextField();
-    JTextField textPowerDrop = new JTextField();
-    JTextField textLedCurrent = new JTextField();
-    JTextField textLedNumber = new JTextField();
+    JTextField textFieldPSupply = new JTextField();
+    JTextField textFieldPowerDrop = new JTextField();
+    JTextField textFieldLedCurrent = new JTextField();
+    JTextField textFieldLedNumber = new JTextField();
 
     // Defining Buttons
     JButton buttonCalcButton = new JButton("Calculate");
@@ -104,10 +102,10 @@ public class ViewMain {
     ImageIcon image = new ImageIcon("logo.png");
 
     // Text Prompt
-    TextPrompt promptPSupply = new TextPrompt("Value must be between 3 and 24", textPSupply);
-    TextPrompt promptPowerDrop = new TextPrompt("Value must be between 1.6 and 4", textPowerDrop);
-    TextPrompt promptLedCurrent = new TextPrompt("Value must be between 2 and 70", textLedCurrent);
-    TextPrompt promptLedNumbers = new TextPrompt("Value must be between 1 and 99", textLedNumber);
+    TextPrompt promptPSupply = new TextPrompt("Value must be between 3 and 24", textFieldPSupply);
+    TextPrompt promptPowerDrop = new TextPrompt("Value must be between 1.6 and 4", textFieldPowerDrop);
+    TextPrompt promptLedCurrent = new TextPrompt("Value must be between 2 and 70", textFieldLedCurrent);
+    TextPrompt promptLedNumbers = new TextPrompt("Value must be between 1 and 99", textFieldLedNumber);
 
     // Data Formats
     DecimalFormat decF = new DecimalFormat("#0.00");
@@ -131,13 +129,38 @@ public class ViewMain {
     ActionListener calculateButtonListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
-            collectInput();
+            System.setErr(outStream);
+            LedProps.setValidInput(false);
 
-            if (LedProps.getFormulaType() != 0) {
+            /*
+             * Validates if the input are integers/doubles before collecting.
+             */
+            if (ResistorCalculation.validateInput("Power Supply", textFieldPSupply, textArHelp)) {
+                if (ResistorCalculation.validateInput("Power Drop", textFieldPowerDrop, textArHelp))
+                    if (ResistorCalculation.validateInput("LED Current", textFieldLedCurrent, textArHelp)) {
+                        if (ResistorCalculation.validateInput("Led Numbers", textFieldLedNumber, textArHelp)) {
+                            LedProps.setValidInput(true);
+                            collectInput();
+                        }
+                    }
+            }
+
+            /*
+             * If the input is valid and within range of set parameters, the calculation
+             * will start.
+             */
+            if (LedProps.isValuesValidated() == true && LedProps.isFormulaValidated() == true
+                    && LedProps.isValidInput() == true) {
 
                 ResistorCalculation.calculate(LedProps.getFormulaType());
+                System.out.println("Resistor is: " + LedProps.getResistor());
+                labelResultCalculated.setText("Ω " + decF.format(LedProps.getResistor()));
+                /*
+                 * If the result from the calculation is not positive, a resistor will be
+                 * chosen.
+                 */
 
-                if (LedProps.getResistor() > 0) {
+                if (LedProps.isValidResult() == true) {
                     ResistorCalculation.findClosest(LedProps.getE12val(), LedProps.getResistor());
                     textArHelp.setText("");
                     System.out.println("Chosen Resistor: " + LedProps.getChosenResistor());
@@ -148,15 +171,12 @@ public class ViewMain {
                     labelBandSecondColor.setText(LedProps.getSecondColorLabel());
                     labelBandThirdColor.setText(LedProps.getThirdColorLabel());
 
-                    System.out.println("Resistor is: " + LedProps.getResistor());
-                    labelResultCalculated.setText("Ω " + decF.format(LedProps.getResistor()));
                 } else {
-                    labelResultCalculated.setText("Ω " + 0.0);
-                    labelResultResistor.setText("Ω " + 0.0);
+                    labelResultResistor.setText("Ω ");
+                    labelBandFirstColor.setText("");
+                    labelBandSecondColor.setText("");
+                    labelBandThirdColor.setText("");
                 }
-            } else {
-                // MessageHandler.displayTextMessage("No formula selected", textArHelp);
-                System.err.println("No formula selected\n");
             }
 
         }
@@ -210,10 +230,11 @@ public class ViewMain {
         parameterLabelPanel.add(labelLedNumber);
 
         parameterTextLabel.setLayout(new GridLayout(4, 1));
-        parameterTextLabel.add(textPSupply);
-        parameterTextLabel.add(textPowerDrop);
-        parameterTextLabel.add(textLedCurrent);
-        parameterTextLabel.add(textLedNumber);
+
+        parameterTextLabel.add(textFieldPSupply);
+        parameterTextLabel.add(textFieldPowerDrop);
+        parameterTextLabel.add(textFieldLedCurrent);
+        parameterTextLabel.add(textFieldLedNumber);
 
         // Series & Calculate Panel
         // calculateMainPanel.setBorder(new TitledBorder("Series or Parallel?"));
@@ -283,12 +304,11 @@ public class ViewMain {
 
     }
 
-    private static boolean rangeCheck(Double inputNum, double min, double max) {
-        return inputNum > min && max < inputNum;
-    }
-
     /*
-     * Collects the given input from the textfields
+     * Checks if the input fields not empty at first, otherwise it will warn the
+     * user in the Tip Textarea. Afterwards it will run through a couple of range
+     * validation checks before continuing to pass the textfield input to the
+     * Setters.
      */
     private void collectInput() {
 
@@ -296,66 +316,77 @@ public class ViewMain {
         System.setErr(outStream);
         textArHelp.setText("");
 
-        String resP = textPSupply.getText();
-        String resV = textPowerDrop.getText();
-        String resMA = textLedCurrent.getText();
-        String resN = textLedNumber.getText();
+        String resP = textFieldPSupply.getText();
+        String resV = textFieldPowerDrop.getText();
+        String resMA = textFieldLedCurrent.getText();
+        String resN = textFieldLedNumber.getText();
+
+        LedProps.setValuesValidated(false);
+        LedProps.setFormulaValidated(false);
+
+        /*
+         * Checks if the input fields not empty.
+         */
 
         if (resP.equals("") || resV.equals("") || resMA.equals("") || resN.equals("")) {
             // textArHelp.setText("Field cannot be empty");
             System.err.println("Field cannot be empty");
+        } else if (rbGroup.getSelection() == null) {
+            System.err.println("No Formula selected");
         } else {
+
+            LedProps.setFormulaValidated(true);
+
             Double resPDouble = Double.parseDouble(resP);
             Double resVDouble = Double.parseDouble(resV);
             Double resMaDouble = Double.parseDouble(resMA);
             Double resNDouble = Double.parseDouble(resN);
 
-            boolean check = false;
+            /*
+             * Will run through the textfields for rangeChecks before continuing to pass the
+             * textfield input to the Setters
+             */
 
-            if (ResistorCalculation.confirmCheckRange(resPDouble, 3, 24)) {
-                if (ResistorCalculation.confirmCheckRange(resVDouble, 1.6, 4)) {
-                    if (ResistorCalculation.confirmCheckRange(resMaDouble, 2, 70)) {
-                        if (ResistorCalculation.confirmCheckRange(resNDouble, 1, 99)) {
-                            check = true;
+            if (ResistorCalculation.confirmCheckRange("Power Supply", textFieldPSupply, resPDouble, 3, 24)) {
+                if (ResistorCalculation.confirmCheckRange("LED Power Drop", textFieldPowerDrop, resVDouble, 1.6, 4)) {
+                    if (ResistorCalculation.confirmCheckRange("LED Current", textFieldLedCurrent, resMaDouble, 2, 70)) {
+                        if (ResistorCalculation.confirmCheckRange("LED Numbers", textFieldLedNumber, resNDouble, 1,
+                                99)) {
+
+                            LedProps.setValuesValidated(true);
                         }
                     }
                 }
             }
 
-            if (check == true) {
-                // textArHelp.setText("");
+            /*
+             * Parses textfield into doubles and sets hem in their Setters
+             */
+            if (LedProps.isValuesValidated() == true) {
                 System.out.println("Collecting Input");
+                try {
+                    LedProps.setPowerSupply(Double.parseDouble(resP));
+                    LedProps.setLedPowerDrop(Double.parseDouble(resV));
+                    LedProps.setLedCurrent(Double.parseDouble(resMA));
+                    LedProps.setLedNumbers(Integer.parseInt(resN));
+                } catch (NumberFormatException e) {
+                    textArHelp.setText("Invalid input");
+                }
 
-                // System.out.println(
-                // "\n Power Supply: " + LedProps.getPowerSupply() + "\n Power Drop: " +
-                // LedProps.getLedPowerDrop()
-                // + "\n LED Current: " + LedProps.getLedCurrent() + "\n LED Numbers: "
-                // + LedProps.getLedNumbers() + "\n Formula Type: " +
-                // LedProps.getFormulaType());
-
-                LedProps.setPowerSupply(Double.parseDouble(resP));
-                LedProps.setLedPowerDrop(Double.parseDouble(resV));
-                LedProps.setLedCurrent(Double.parseDouble(resMA));
-                LedProps.setLedNumbers(Integer.parseInt(resN));
-            } else {
-
-                // MessageHandler.displayTextMessage("One or more values are invalid",
-                // textArHelp);
-                System.err.println("One or more values are invalid");
             }
         }
     }
 
+    /**
+     * Creates a new instance of TextAreaOutputStream which writes to the specified
+     * instance of javax.swing.JTextArea control.
+     *
+     * @param textArea A reference to the javax.swing.JTextArea control to which the
+     *                 output must be redirected to.
+     */
     public class TextAreaOutputStream extends OutputStream {
         private javax.swing.JTextArea jTextArea1;
 
-        /**
-         * Creates a new instance of TextAreaOutputStream which writes to the specified
-         * instance of javax.swing.JTextArea control.
-         *
-         * @param textArea A reference to the javax.swing.JTextArea control to which the
-         *                 output must be redirected to.
-         */
         public TextAreaOutputStream(JTextArea textArea) {
             this.jTextArea1 = textArea;
         }
