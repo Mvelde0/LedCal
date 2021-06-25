@@ -69,7 +69,7 @@ public class ResistorCalculation {
                 LedProps.setResistor((P - (V * N)) / (mA / 1000));
 
                 if (LedProps.getResistor() <= 0) {
-                    System.err.print("Result is not a positive number. Cannot assign colors");
+                    System.err.print("Result is not a positive number. Cannot assign colors.");
                     break;
                 } else {
                     LedProps.setValidResult(true);
@@ -79,7 +79,7 @@ public class ResistorCalculation {
                 System.out.println("Parallel Formula selected");
                 LedProps.setResistor((P - V) / (mA * N / 1000));
                 if (LedProps.getResistor() <= 0) {
-                    System.err.print("Result is not a positive number. Cannot assign colors");
+                    System.err.print("Result is not a positive number. Cannot assign colors.");
                     break;
                 } else {
                     LedProps.setValidResult(true);

@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.awt.Font;
 import java.awt.Color;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
@@ -99,7 +100,8 @@ public class ViewMain {
     JRadioButton radioParallelButton = new JRadioButton("Parallel");
 
     // Defining Images
-    ImageIcon image = new ImageIcon("logo.png");
+    ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/calicon.png"));
+
 
     // Text Prompt
     TextPrompt promptPSupply = new TextPrompt("Value must be between 3 and 24", textFieldPSupply);
@@ -110,6 +112,7 @@ public class ViewMain {
     // Data Formats
     DecimalFormat decF = new DecimalFormat("#0.00");
     PrintStream outStream = new PrintStream(new TextAreaOutputStream(textArHelp));
+
 
     // Defining Actions
     ActionListener radioButtonListener = new ActionListener() {
@@ -296,6 +299,8 @@ public class ViewMain {
 
         // Frame
         mFrame.setTitle("LED Resistance Calculator");
+        mFrame.setIconImage(icon.getImage());
+        mFrame.setLocationRelativeTo(null);
         mFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mFrame.setSize(454, 500);
         mFrame.setResizable(false);
