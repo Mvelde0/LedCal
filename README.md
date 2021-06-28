@@ -4,7 +4,13 @@ A simple LED Resistance Calculator based around the E12 Series
 
 ## Installation
 
+* On the main page, you can access the latest releases on the right side.
 
+![alt text](https://user-images.githubusercontent.com/10596941/123620995-11cfc100-d80b-11eb-8cd9-63ec50b1342c.png)
+
+* From here the zipped application and the source code can be downloaded. Any previous releases will be here aswell
+
+![alt text](https://user-images.githubusercontent.com/10596941/123621033-1b592900-d80b-11eb-83a5-899f764489eb.png)
 
 ## Instructions
 
