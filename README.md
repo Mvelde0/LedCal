@@ -7,7 +7,7 @@ A simple LED Resistance Calculator based around the E12 Series
 
 
 
-## Installation
+> ## Installation
 
 * On the main page, you can access the latest releases on the right side.
 
