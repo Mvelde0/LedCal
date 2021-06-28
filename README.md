@@ -9,9 +9,9 @@ A simple LED Resistance Calculator based around the E12 Series
 
  >## Installation
 
-* On the main page, you can access the latest releases on the right side (Release section)
+* You can get the download the latest release from here -> https://github.com/Mvelde0/LedCal/releases
 
-* From here the zipped application and the source code can be downloaded. Any previous releases will be here aswell.
+* The zipped application and the source code can be downloaded. Any previous releases will be here aswell.
   Since the application is a wrapped exe file with the JRE included, no other installation is required.
 
 
