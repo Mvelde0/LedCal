@@ -14,6 +14,7 @@ A simple LED Resistance Calculator based around the E12 Series
 ![alt text](https://user-images.githubusercontent.com/10596941/123620995-11cfc100-d80b-11eb-8cd9-63ec50b1342c.png)
 
 * From here the zipped application and the source code can be downloaded. Any previous releases will be here aswell
+  Since the application is a wrapped exe file with the JRE included, no other installation is required.
 
 
 
