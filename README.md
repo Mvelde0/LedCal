@@ -11,6 +11,7 @@ A simple LED Resistance Calculator based around the E12 Series
 ![alt text](https://user-images.githubusercontent.com/10596941/123616611-bd2a4700-d806-11eb-96eb-949e9171b410.png)
 
 * Press calculate
+
 ![alt text](https://user-images.githubusercontent.com/10596941/123616711-d7fcbb80-d806-11eb-9bf5-4a58e4fe38a8.png)
 
 * If the resulted resistor value is not positive, the user is notified by the Help section and prompted to adjust the inputted values
