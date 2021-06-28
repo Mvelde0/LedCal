@@ -6,6 +6,11 @@ A simple LED Resistance Calculator based around the E12 Series
 
 
 
+>## Requirements
+
+* Since the application is a wrapped exe file with the JRE included, no other installation is required.
+
+
 
  >## Installation
 
@@ -13,7 +18,7 @@ A simple LED Resistance Calculator based around the E12 Series
 
 * Extract to a new Folder
 
-* Since the application is a wrapped exe file with the JRE included, no other installation is required.
+
 
 
 
