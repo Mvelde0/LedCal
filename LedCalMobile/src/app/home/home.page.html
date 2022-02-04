@@ -1,0 +1,117 @@
+<ion-content [fullscreen]="true">
+  <!-- Main Header  -->
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title> LedCal Mobile </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Grid layout -->
+
+  <ion-grid>
+    <!-- Header -->
+    <ion-label class="label_header"> Parameters </ion-label>
+
+    <!-- User Input Group -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <div class="user-input">
+            <ion-label position="fixed">
+              <small>Power Supply (P)</small></ion-label>
+            <ion-input
+              [(ngModel)]="input_psupply"
+              type="number"
+              placeholder="3 - 24"
+            ></ion-input>
+          </div>
+        </ion-item>
+        <ion-item>
+          <div class="user-input">
+            <ion-label position="fixed"
+              ><small>Power Drop (V)</small></ion-label
+            >
+            <ion-input
+              [(ngModel)]="input_pdrop"
+              type="number"
+              placeholder="1.6 - 4"
+            ></ion-input>
+          </div>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <div class="user_input">
+            <ion-label position="fixed"
+              ><small>LED Current (mA)</small></ion-label
+            >
+            <ion-input
+              [(ngModel)]="input_lcurr"
+              type="number"
+              placeholder="2 - 70"
+            ></ion-input>
+          </div>
+        </ion-item>
+        <ion-item>
+          <div class="user_input">
+            <ion-label position="fixed"><small>Nr. of LEDS</small></ion-label>
+            <ion-input
+              [(ngModel)]="input_lednum"
+              type="number"
+              placeholder="1 - 99"
+            ></ion-input>
+          </div>
+        </ion-item>
+      </ion-col>
+
+      <!-- Sequence Type -->
+      <ion-col>
+        <ion-label class="label_header"> Sequence Type </ion-label>
+        <ion-segment (ionChange)="selectedSegment($event)" [(ngModel)]="formulaSegment">
+          <ion-segment-button value="1">
+            <ion-label>Series</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <ion-label>Parallel</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+
+    <!-- Calculate Button -->
+    <div class="calculate_button">
+      <ion-button (click)="clickButtonCalculate($event)" expand="full"
+        >Calculate</ion-button>
+    </div>
+
+    <!-- Result Group -->
+    <ion-label class="label_header"> Results </ion-label>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="fixed"><small>Calculated Ω</small></ion-label>
+          <ion-input [(ngModel)]="output_result" value="Ω" disabled></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed"><small>Chosen Ω</small></ion-label>
+          <ion-input [(ngModel)]="output_chosen" value="Ω" disabled></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Ring Colors -->
+    <ion-row>
+      <ion-col>
+        <ion-label position="fixed">#COLOR</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label position="fixed">#COLOR</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label position="fixed">#COLOR</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Debug output -->
+</ion-content>
